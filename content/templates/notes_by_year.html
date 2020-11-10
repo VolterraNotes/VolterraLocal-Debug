@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block head_title %}-Appunti di {{year}}{% endblock %}
+
+{% block content %}
+  <h2 align="center" class="mb-4">Appunti di {{year}}</h2>
+  {% include 'notes_filter.html' %}
+  {% include 'pagination.html' %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block head_title %}Registrazione{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+   <h2>Registrazione</h2>
+
+  <form method="post" enctype='multipart/form-data'>
+      {% csrf_token %}
+      {{form | crispy}}
+      <input type="submit" value="Registrati" class="btn btn-info">
+  </form>
+
+  {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-danger mt-3" role="alert">
+      {{message}}
+    </div>
+    {% endfor %}
+  {% endif %}
+
+  <a href="{% url 'login' %}">Effettua il Login</a>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 align="center">Scegli la materia:</h1>
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-12 text-center">
+        <a href="{% url 'notes_by_year' year=year %}" style="color: #3c4040; text-decoration: none;">
+          <div class="card-header py-4" style="background-color: #dbd6d5; box-shadow: 0 0 2px black;">
+            <h5>Tutte le Materie</h5>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="row justify-content-center mt-2">
+      {% for materia in materie %}
+        <div class="col-md-4 text-center mt-3">
+          <a href="{% url 'notes_by_year_subject' year=year subject=materia %}" style="color: #3c4040; text-decoration: none;">
+            <div class="card-header py-5 materia" style="box-shadow: 0 0 2px black;">
+              <h5>{{materia.nome}}</h5>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+
+{% endblock content %}

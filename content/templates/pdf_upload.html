@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block head_title %}-Carica un PDF{% endblock head_title %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-danger" role="alert">{{message}}</div>
+    {% endfor %}
+  {% endif %}
+  <h2 align="center">Inserisci i dati sul tuo appunto:</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form | crispy}}
+    <input type="submit" class="btn btn-info" value="Crea">
+  </form>
+{% endblock content %}

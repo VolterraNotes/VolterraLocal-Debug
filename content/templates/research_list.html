@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block head_title %}-Risultati per '{{filter}}'{% endblock %}
+
+{% block content %}
+  <h2 align="center">Risultati della ricerca per '{{filter}}'</h2>
+  <div class="row justify-content-center mt-5">
+    <div class="col-lg-4 mb-3 border-right">
+      <h4>Professori:</h4>
+      {% for prof in profs %}
+        <div class="card mt-2">
+          <div class="card-header" id="heading{{forloop.counter}}">
+            <h2 class="mb-0">
+              <button style="text-decoration: none; color: #43474d;" class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse{{forloop.counter}}" aria-expanded="true" aria-controls="collapse{{forloop.counter}}">
+                {{prof.nome}} {{prof.cognome}}
+              </button>
+            </h2>
+          </div>
+
+          <div id="collapse{{forloop.counter}}" class="collapse" aria-labelledby="heading{{forloop.counter}}" data-parent="#accordionExample">
+            <div class="card-body">
+              {% for materia in prof.materie.all %}
+                <a href="{% url 'notes_by_prof_subject' prof=prof.cognome subject=materia %}" class="btn btn-info" style="color: white;">{{materia.nome}}</a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <p class="text-muted">Nessun professore trovato...</p>
+      {% endfor %}
+    </div>
+    <div class="col-lg-4 mb-3 border-right">
+      <h4>Materie:</h4>
+      {% for subject in subjects %}
+        <div class="card">
+          <div class="card-header py-3">
+            <a href="{% url 'notes_by_subject' subject=subject.nome %}" style="color:#43474d; text-decoration: none;">{{subject}}</a>
+          </div>
+        </div>
+      {% empty %}
+        <p class="text-muted">Nessuna materia trovata</p>
+      {% endfor %}
+    </div>
+    <div class="col-lg-4 mb-3">
+      <h4>Appunti:</h4>
+      {% include 'notes_research.html' %}
+    </div>
+  </div>
+{% endblock %}

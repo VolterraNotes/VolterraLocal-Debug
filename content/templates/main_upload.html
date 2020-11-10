@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block head_title %}-Aggiungi una Nota{% endblock head_title %}
+{% load static %}
+
+{% block content %}
+  <h2 align="center">Scegli il tipo di file:</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-4 py-4 text-center upload_option">
+      <a href="{% url 'image_upload' %}" style="color:#3c4040;text-decoration:none;">
+        <div class="card-header border">
+          <!-- <label for="upload-photo" style="cursor:pointer;">Immagine</label>
+          <input type="file" id="upload-photo" style="position: absolute; opacity: 0; z-index: -1;"> -->
+          <h5>Immagine</h5>
+        </div>
+        <div class="card-body border">
+          <img class="card-img-bottom mt-2" src="{% static 'img/image_logo.png' %}" alt="Immagine">
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4 py-4 text-center upload_option">
+      <a href="{% url 'pdf_upload' %}" style="color:#3c4040;text-decoration:none;">
+        <div class="card-header border">
+          <!-- <label for="upload-pdf" style="cursor:pointer;">PDF</label>
+          <input type="file" id="upload-pdf" style="position: absolute; opacity: 0; z-index: -1;"> -->
+          <h5>PDF/DOC</h5>
+        </div>
+        <div class="card-body border">
+          <img class="card-img-bottom mt-2" src="{% static 'img/pdf_logo' %}" alt="PDF">
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4 py-4 text-center upload_option">
+      <a href="{% url 'audio_upload' %}" style="color:#3c4040;text-decoration:none;">
+        <div class="card-header border">
+          <!-- <label for="upload-pdf" style="cursor:pointer;">PDF</label>
+          <input type="file" id="upload-pdf" style="position: absolute; opacity: 0; z-index: -1;"> -->
+          <h5>Audio</h5>
+        </div>
+        <div class="card-body border">
+          <img class="card-img-bottom mt-2" src="{% static 'img/mp3-file.png' %}" alt="MP3">
+        </div>
+      </a>
+    </div>
+  </div>
+{% endblock content %}

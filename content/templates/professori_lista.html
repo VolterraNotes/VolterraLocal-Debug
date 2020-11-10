@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 align="center">Professori:</h1>
+  <div class="accordion mt-5" id="accordionExample">
+    {% for prof in object_list %}
+      <div class="card mt-2">
+        <div class="card-header" id="heading{{forloop.counter}}">
+          <h2 class="mb-0">
+            <button style="text-decoration: none; color: #43474d;" class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse{{forloop.counter}}" aria-expanded="true" aria-controls="collapse{{forloop.counter}}">
+              {{prof.nome}} {{prof.cognome}}
+            </button>
+          </h2>
+        </div>
+
+        <div id="collapse{{forloop.counter}}" class="collapse" aria-labelledby="heading{{forloop.counter}}" data-parent="#accordionExample">
+          <div class="card-body">
+            {% for materia in prof.materie.all %}
+              <a href="{% url 'notes_by_prof_subject' prof=prof.cognome subject=materia %}" class="btn btn-info" style="color: white;">{{materia.nome}}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+{% endblock content %}

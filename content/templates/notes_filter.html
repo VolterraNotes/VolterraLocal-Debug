@@ -1,0 +1,84 @@
+{% for nota in page_obj %}
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-sm-8">
+      <div class="card mx-auto mb-3">
+        <div class="card-body">
+          <h5 class="card-title d-inline">{{nota.titolo}}</h5><p class="btn btn-light border note_subject"><a href="{% url 'notes_by_subject' subject=nota.materia %}" style="color:#43474d; text-decoration: none;">{{nota.materia.nome}}</a></p>
+          <!-- <p class="btn btn-light border note_subject">{{nota.classe}}</p> -->
+          <p class="text-muted"><a href="{% url 'other_profiles' user_pk=nota.studente.pk %}">{{nota.studente.username}}</a>, <a href="{% url 'notes_by_year' year=nota.classe %}">{{nota.classe}}</a></p>
+          <p class="card-text d-inline border-bottom"><small class="text-muted">Caricato {{nota.data_pubblicazione | timesince}} fa</small>
+            {% if nota.immagine %}
+              <a class="ml-2" href="{{nota.immagine.url}}" download>
+                <i class="fas fa-cloud-download-alt">Download</i>
+              </a>
+            {% endif %}
+            {% if nota.file_pdf %}
+              <a class="ml-2" href="{{nota.file_pdf.url}}" download>
+                <i class="fas fa-cloud-download-alt">Download</i>
+              </a>
+            {% endif %}
+            {% if nota.file_audio %}
+              <a class="ml-2" href="{{nota.file_audio.url}}" download>
+                <i class="fas fa-cloud-download-alt">Download</i>
+              </a>
+            {% endif %}
+          </p>
+          {% if nota.segnalazioni.all %}
+            <p style="cursor:pointer;" class="text-muted mb-0 mt-3 btn-btn-danger" data-toggle="modal" data-target="#{{forloop.counter}}"><i class="fas fa-exclamation-circle"></i>  Post segnalato</p>
+          {% endif %}
+        </div>
+        {% if nota.immagine %}
+          <a href="{{nota.immagine.url}}">
+            <img class="card-img-bottom" src="{{nota.immagine.url}}" alt="Card image cap">
+          </a>
+        {% endif %}
+        {% if nota.file_pdf %}
+          <p align="center">Clicca l'icona per visualizzare il PDF: <a href="{{nota.file_pdf.url}}"><i class="far fa-file-pdf ml-2"></i></a></p>
+        {% endif %}
+        {% if nota.file_audio %}
+          <audio controls class="ml-3 mb-3">
+            <source src="{{nota.file_audio.url}}" type="audio/mpeg">
+            Il tuo browser non supporta la riproduzione audio
+          </audio>
+        {% endif %}
+        <div class="card-footer">
+          <div class="row justify-content-center">
+            <div class="col-3 text-center">
+              <a href="{% url 'upvote' nota_pk=nota.pk %}?next={{request.path}}" class="btn btn-success"><i class="fas fa-thumbs-up"> {{nota.utile}}</i></a>
+            </div>
+            <div class="col-3 text-center">
+              <a href="{% url 'downvote' nota_pk=nota.pk %}?next={{request.path}}" class="btn btn-danger"><i class="fas fa-thumbs-down"> {{nota.non_utile}}</i></a>
+            </div>
+            <div class="col-3 text-center">
+              <a href="{% url 'form_segnalazione' nota_pk=nota.pk %}" class="btn btn-warning"><i class="fas fa-exclamation-triangle"><small>  Segnala</small></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% load index %}
+      <div class="modal fade" id="{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Post Segnalato</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Il post è stato recentemente segnalato con motivazione: '{{nota.segnalazioni.all.0.motivo}}'
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% empty %}
+  <p align="center" class="text-muted">Non è stato trovato alcun appunto che fa al caso tuo, ci spiace...</p>
+{% endfor %}

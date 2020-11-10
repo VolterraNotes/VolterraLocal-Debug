@@ -1,0 +1,223 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    <title>VolterraNotes{% block head_title %}{% endblock head_title %}</title>
+
+    {% block extra_js %}
+    {% endblock %}
+    <script src="https://kit.fontawesome.com/51fbbb0ef1.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <style>
+      .navbar-custom {
+        background-color: #d8dee8;
+      }
+
+      .year-block:hover {
+        transform: scale(1.1);
+        transition: ease 0.5s;
+      }
+
+      .prof_link:hover {
+        text-shadow: 0 0 3px;
+        transition: ease 0.5s;
+      }
+
+      body {
+        font-family: 'Ubuntu', sans-serif;
+      }
+
+      .body {
+        min-height: calc(100vh - 350px);
+      }
+
+      .materia:hover {
+        background-color: #ffffff;
+        /*color: #ffffff;*/
+        transition: ease-in 0.5s;
+        transform: scale(1.05);
+      }
+
+      .profile_title {
+        display: none;
+      }
+
+      .home_grid {
+        display: grid;
+        grid-template-rows: 200px 200px;
+        grid-template-columns: 400px 400px;
+        grid-gap: 50px;
+        justify-content: center;
+      }
+
+      #last_year_block {
+        box-shadow: 0 0 10px black;
+        margin-top: 60px;
+        width: 550px;
+      }
+
+      #last_year_text {
+        margin-top: 50px;
+        margin-left: 160px;
+      }
+
+      .note_subject {
+        margin-left: 20px;
+        display: inline-block;
+      }
+
+      .fa-file-pdf {
+        font-size: 24px;
+      }
+
+      .inline-button {
+        display: inline-block;
+      }
+
+      @media only screen and (max-width: 767px) {
+        .profile_header {
+          margin-top: 50px;
+        }
+
+
+        .profile_title {
+          display: block;
+        }
+
+        .upload_option {
+          width: 400px;
+        }
+
+        .profile_col {
+          width: 400px;
+        }
+      }
+
+      @media only screen and (max-width: 856px) {
+
+        .home_grid {
+          grid-template-columns: 400px;
+          grid-template-rows: 200px 200px 200px 200px;
+        }
+
+        #last_year_block {
+          margin-top: 60px;
+          width: 400px;
+          height: 200px;
+        }
+
+        #last_year_text {
+          margin-top: 40px;
+          margin-left: 80px;
+        }
+
+        .inline-button {
+          width: auto;
+          display: block;
+        }
+
+        .note_subject {
+          margin-left: 0;
+          margin-top: 10px;
+        }
+
+        .nome_studente_nota {
+          margin-top: 20px;
+        }
+
+      }
+
+    </style>
+  </head>
+  <body>
+    <!-- #31d1d4 -->
+    <nav class="navbar navbar-expand-lg navbar-custom navbar-light" style="box-shadow: 0 0 5px black;">
+      <a class="navbar-brand" href="{% url 'homepage' %}">VolterraNotes</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'homepage' %}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'main_upload' %}">Carica</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'professori' %}">Lista Professori</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Classi
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'materie' year='1a' %}">Prima</a>
+              <a class="dropdown-item" href="{% url 'materie' year='2a' %}">Seconda</a>
+              <a class="dropdown-item" href="{% url 'materie' year='3a' %}">Terza</a>
+              <a class="dropdown-item" href="{% url 'materie' year='4a' %}">Quarta</a>
+              <a class="dropdown-item" href="{% url 'materie' year='5a' %}">Quinta</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#footer" tabindex="-1" aria-disabled="true">Info</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" action="{% url 'research' %}" method="get">
+          <input class="form-control mr-sm-2" type="search" placeholder="Materie,Prof,Appunti..." aria-label="Search" name="research">
+          <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Cerca</button>
+        </form>
+
+        <ul class="navbar-nav ml-3">
+          {% if not request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">
+                Login
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'register' %}">
+                Registrati
+              </a>
+            </li>
+          {% else %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+              {{request.user}}
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
+              <a class="dropdown-item" href="{% url 'profile' %}">Visualizza Profilo</a>
+              <a class="dropdown-item" href="{% url 'password_change' %}">Cambia Password</a>
+              {% if request.user.is_staff %}
+                <a class="dropdown-item" href="{% url 'admin:index' %}">Pannello di Gestione</a>
+              {% endif %}
+              <a class="dropdown-item" href="{% url 'logout' %}">Esci</a>
+            </div>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container body mt-5 mb-5">
+      {% block content %}
+      {% endblock content %}
+    </div>
+
+    <div id="footer" class="row justify-content-center m-0" style="height: 200px; background-color: #d8dee8; margin-top: 100px; box-shadow: 0 0 5px black;">
+      <div class="col-md-4 my-auto">
+        <h4>Contattaci via email:</h4>
+        <a href="mailto:appuntihub@gmail.com">appuntihub@gmail.com</a>
+      </div>
+      <div class="col-md-4 my-auto">
+        <h5>Pagina di condivisione note per gli studenti del <a href="http://www.liceovolterra.edu.it">Liceo Scientifico Vito Volterra</a> di Ciampino.</h5>
+        <p class="text-muted">Sito programmato da <a href="https://www.instagram.com/flavioeuforbio">Flavio G. Euforbio</a> (VE)</p>
+      </div>
+    </div>
+
+  </body>
+</html>
