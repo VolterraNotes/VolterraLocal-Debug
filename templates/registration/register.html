@@ -2,15 +2,12 @@
 {% block head_title %}Registrazione{% endblock %}
 {% load crispy_forms_tags %}
 
+{% block extra_js %}
+  {% load static %}
+  <script src="{% static 'js/email_field_label.js' %}" defer></script>
+{% endblock %}
+
 {% block content %}
-   <h2>Registrazione</h2>
-
-  <form method="post" enctype='multipart/form-data'>
-      {% csrf_token %}
-      {{form | crispy}}
-      <input type="submit" value="Registrati" class="btn btn-info">
-  </form>
-
   {% if messages %}
     {% for message in messages %}
     <div class="alert alert-danger mt-3" role="alert">
@@ -18,6 +15,14 @@
     </div>
     {% endfor %}
   {% endif %}
+
+   <h2>Registrazione</h2>
+
+  <form method="post" enctype='multipart/form-data'>
+      {% csrf_token %}
+      {{form | crispy}}
+      <input type="submit" value="Registrati" class="btn btn-info">
+  </form>
 
   <a href="{% url 'login' %}">Effettua il Login</a>
 {% endblock %}

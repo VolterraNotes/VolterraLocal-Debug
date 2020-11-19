@@ -18,7 +18,7 @@
         <div class="card-body">
           <h5 class="card-title">{{user.username}}</h5>
           <p class="card-text">Classe: <a href="{% url 'notes_by_year' year=user.classe %}">{{user.classe}}</a></p>
-          <p class="card-text">Email: {{user.email}}</p>
+          <p class="card-text">Email: <a href="mailto:{{user.email}}">{{user.email}}</a></p>
           <button onclick="progress_bar('{{ratio_pos}}','{{ratio_neg}}')" class="btn btn-light">Progressi</button>
           <div id="progress-bar" class="progress mt-3" style="display:none;">
             <div id="pos-bar" class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>

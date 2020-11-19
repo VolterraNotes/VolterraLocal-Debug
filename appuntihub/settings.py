@@ -54,6 +54,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# AUTHENTICATION_BACKENDS = ['core.backendauth.ModelBackend']
+
 ROOT_URLCONF = 'appuntihub.urls'
 
 TEMPLATES = [
