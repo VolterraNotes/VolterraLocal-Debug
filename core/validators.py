@@ -9,7 +9,7 @@ def validate_email(email):
 
     status = response.json()['status']
     if not status == "valid":
-        raise ValidationError("L'informazione inserita non corrisponde ad un'email")
+        raise ValidationError("L'informazione inserita non corrisponde ad un'email valida")
 
     else:
         if not "liceovolterra.edu.it" in email:
