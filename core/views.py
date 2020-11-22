@@ -39,7 +39,7 @@ def register(request):
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
-            return HttpResponse("Clicca sul link di attivazione che abbiamo inviato alla tua mail per procedere")
+            return render(request, "registration/activation-toconfirm.html")
         else:
             print(form.errors)
             messages.error(request, list(form.errors.values())[0])
@@ -52,16 +52,16 @@ def register(request):
 def activation(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
-        user = CustomUser.objects.get(pk=uuid)
+        user = CustomUser.objects.get(pk=uid)
     except:
         user = None
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
         login(request, user)
-        return HttpResponse("La tua registrazione è andata a buon fine! Il tuo account è ora attivo, puoi effettuare il login.")
+        return render(request, "registration/activation-confirmed.html")
     else:
-        return HttpResponse("Il link di attivazione non è valido!")
+        return render(request, "registration/activation-refused.html")
 
 
 @login_required
